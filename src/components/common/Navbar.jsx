@@ -55,13 +55,21 @@ export default function Navbar() {
           </button>
 
           {isAuthenticated ? (
-            <button
-              onClick={handleDashboardRedirect}
-              className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold hover:from-blue-500 hover:to-indigo-500 shadow-md shadow-indigo-500/25 transition-all"
-            >
-              <span>Dashboard ({role?.toUpperCase()})</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={handleDashboardRedirect}
+                className="text-xs font-medium text-slate-300 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-slate-800/80 transition-colors hidden sm:inline-flex items-center space-x-1"
+              >
+                <span className="capitalize">{role} Dashboard</span>
+              </button>
+              <Link
+                to="/roles"
+                className="flex items-center space-x-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold hover:from-blue-500 hover:to-indigo-500 shadow-md shadow-indigo-500/25 transition-all"
+              >
+                <span>Get Started</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           ) : (
             <div className="flex items-center space-x-3">
               <Link
@@ -76,6 +84,7 @@ export default function Navbar() {
               >
                 <Sparkles className="w-4 h-4 text-cyan-300" />
                 <span>Get Started</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           )}

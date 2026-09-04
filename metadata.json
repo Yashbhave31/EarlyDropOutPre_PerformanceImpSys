@@ -1,0 +1,6 @@
+{
+  "name": "EduRisk AI - Dropout Prediction & Intervention System",
+  "description": "Machine learning dropout risk prediction, explainable AI (SHAP) analytics, and student performance intervention tracking system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

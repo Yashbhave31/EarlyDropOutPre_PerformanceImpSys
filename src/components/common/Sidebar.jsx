@@ -43,11 +43,11 @@ export default function Sidebar({ isOpen, onClose }) {
       ];
     } else {
       return [
-        { label: 'My Progress', path: '/student/dashboard', icon: LayoutDashboard },
-        { label: 'Academic Health', path: '/student/performance', icon: BarChart3 },
-        { label: 'Risk Analysis & SHAP', path: '/student/risk', icon: BrainCircuit },
-        { label: 'Actionable Goals', path: '/student/recommendations', icon: Target, badge: 'Tips' },
-        { label: 'Mentorship History', path: '/student/interventions', icon: HeartHandshake },
+        { label: 'Student Dashboard', path: '/student/dashboard', icon: LayoutDashboard },
+        { label: 'Academic Performance', path: '/student/performance', icon: BarChart3 },
+        { label: 'AI Risk Analysis', path: '/student/risk-analysis', icon: BrainCircuit, badge: 'SHAP' },
+        { label: 'Recommendations', path: '/student/recommendations', icon: Target, badge: 'Plan' },
+        { label: 'Counseling & Interventions', path: '/student/interventions', icon: HeartHandshake },
         { label: 'Student Profile', path: '/student/profile', icon: User }
       ];
     }

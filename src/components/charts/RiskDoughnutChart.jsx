@@ -4,22 +4,34 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function RiskDoughnutChart({ low = 8, medium = 3, high = 2 }) {
+export default function RiskDoughnutChart({ low, medium, moderate, high, critical, stats }) {
+  const lowVal = stats?.lowRisk ?? low ?? 8;
+  const modVal = stats?.moderateRisk ?? stats?.mediumRisk ?? moderate ?? medium ?? 4;
+  const highVal = stats?.highRisk ?? high ?? 3;
+  const critVal = stats?.criticalRisk ?? critical ?? 1;
+
+  const labels = ['Low Risk (<35%)', 'Moderate Risk (35-65%)', 'High Risk (65-80%)', 'Critical Risk (>80%)'];
+  const dataValues = [lowVal, modVal, highVal, critVal];
+  const bgColors = [
+    'rgba(16, 185, 129, 0.85)',
+    'rgba(245, 158, 11, 0.85)',
+    'rgba(249, 115, 22, 0.85)',
+    'rgba(239, 68, 68, 0.95)'
+  ];
+  const borderColors = [
+    'rgba(16, 185, 129, 1)',
+    'rgba(245, 158, 11, 1)',
+    'rgba(249, 115, 22, 1)',
+    'rgba(239, 68, 68, 1)'
+  ];
+
   const data = {
-    labels: ['Low Risk', 'Medium Risk', 'High Risk'],
+    labels,
     datasets: [
       {
-        data: [low, medium, high],
-        backgroundColor: [
-          'rgba(16, 185, 129, 0.85)',
-          'rgba(245, 158, 11, 0.85)',
-          'rgba(239, 68, 68, 0.85)'
-        ],
-        borderColor: [
-          'rgba(16, 185, 129, 1)',
-          'rgba(245, 158, 11, 1)',
-          'rgba(239, 68, 68, 1)'
-        ],
+        data: dataValues,
+        backgroundColor: bgColors,
+        borderColor: borderColors,
         borderWidth: 1.5,
         hoverOffset: 6
       }
@@ -32,7 +44,7 @@ export default function RiskDoughnutChart({ low = 8, medium = 3, high = 2 }) {
     plugins: {
       legend: {
         position: 'bottom',
-        labels: { color: '#94a3b8', font: { size: 11 }, padding: 12, usePointStyle: true }
+        labels: { color: '#94a3b8', font: { size: 10 }, padding: 8, usePointStyle: true }
       },
       tooltip: {
         backgroundColor: '#0f172a',
@@ -40,10 +52,10 @@ export default function RiskDoughnutChart({ low = 8, medium = 3, high = 2 }) {
         borderWidth: 1
       }
     },
-    cutout: '72%'
+    cutout: '70%'
   };
 
-  const total = low + medium + high;
+  const total = lowVal + modVal + highVal + critVal;
 
   return (
     <div className="relative w-full h-56 flex items-center justify-center">

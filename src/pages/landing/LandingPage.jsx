@@ -61,7 +61,7 @@ export default function LandingPage() {
                   to="/roles"
                   className="w-full sm:w-auto flex items-center justify-center space-x-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white font-bold text-sm hover:from-blue-500 hover:to-indigo-600 shadow-xl shadow-indigo-600/30 transition-all hover:-translate-y-0.5"
                 >
-                  <span>Explore System</span>
+                  <span>Get Started</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 

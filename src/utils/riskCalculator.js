@@ -61,10 +61,12 @@ export function calculateStudentRisk(student) {
 
   // Risk Classification
   let riskLevel = "LOW";
-  if (probability >= 65) {
+  if (probability >= 75) {
+    riskLevel = "CRITICAL";
+  } else if (probability >= 60) {
     riskLevel = "HIGH";
   } else if (probability >= 35) {
-    riskLevel = "MEDIUM";
+    riskLevel = "MODERATE";
   } else {
     riskLevel = "LOW";
   }
@@ -76,7 +78,7 @@ export function calculateStudentRisk(student) {
     contributingFactors.push({
       factor: `Attendance below 75% (${attendance}%)`,
       impact: attendance < 60 ? "HIGH" : "MEDIUM",
-      weight: parseFloat(((75 - attendance) * 0.02).fixed(2)),
+      weight: parseFloat(((75 - attendance) * 0.02).toFixed(2)),
       type: "negative",
       description: "Low attendance reduces classroom engagement and internal viva eligibility."
     });
@@ -84,17 +86,17 @@ export function calculateStudentRisk(student) {
     contributingFactors.push({
       factor: `Strong Attendance (${attendance}%)`,
       impact: attendance >= 85 ? "HIGH" : "MEDIUM",
-      weight: -parseFloat(((attendance - 75) * 0.015).fixed(2)),
+      weight: -parseFloat(((attendance - 75) * 0.015).toFixed(2)),
       type: "positive",
       description: "Consistent lecture presence provides academic resilience."
     });
   }
 
-if (backlogs > 0) {
+  if (backlogs > 0) {
     contributingFactors.push({
       factor: `${backlogs} Active Backlog(s)`,
       impact: backlogs >= 2 ? "HIGH" : "MEDIUM",
-      weight: parseFloat((backlogs * 0.18).fixed(2)),
+      weight: parseFloat((backlogs * 0.18).toFixed(2)),
       type: "negative",
       description: "Active backlogs increase cognitive overload and year-drop risk."
     });
@@ -112,7 +114,7 @@ if (backlogs > 0) {
     contributingFactors.push({
       factor: `Internal Marks Below Average (${internalMarks}/100)`,
       impact: internalMarks < 50 ? "HIGH" : "MEDIUM",
-      weight: parseFloat(((60 - internalMarks) * 0.015).fixed(2)),
+      weight: parseFloat(((60 - internalMarks) * 0.015).toFixed(2)),
       type: "negative",
       description: "Low continuous assessment scores signal risk in end-semester exams."
     });
@@ -205,8 +207,8 @@ export function generateRecommendations({ riskLevel, probability, attendance, ba
       category: "Coursework",
       action: "Provide structured milestone checkpoints for laboratory writeups 48 hours prior to final submission deadline.",
       goal: "Submit 100% of upcoming lab assignments on time",
-      impact: "Reduces dropout risk by ~10%
-{  });
+      impact: "Reduces dropout risk by ~10%"
+    });
   }
 
   if (feePending) {

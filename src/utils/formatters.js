@@ -14,16 +14,27 @@ export function formatDate(dateString) {
 }
 
 export function getRiskColorClass(risk) {
-  switch (risk?.toUpperCase()) {
+  const normalized = risk?.toUpperCase();
+  switch (normalized) {
+    case 'CRITICAL':
+      return {
+        bg: 'bg-rose-500/10 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-500/30',
+        badge: 'bg-rose-500/15 text-rose-500 dark:text-rose-300 border border-rose-500/30',
+        glow: 'glow-red',
+        accent: '#f43f5e',
+        border: 'border-rose-500/40',
+        gradient: 'from-rose-600 to-red-700'
+      };
     case 'HIGH':
       return {
-        bg: 'bg-red-500/10 dark*bg-red-950/40 text-red-600 dark:text-red-400 border-red-500/30',
+        bg: 'bg-red-500/10 dark:bg-red-950/40 text-red-600 dark:text-red-400 border-red-500/30',
         badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30',
         glow: 'glow-red',
         accent: '#ef4444',
         border: 'border-red-500/40',
         gradient: 'from-red-500 to-rose-600'
       };
+    case 'MODERATE':
     case 'MEDIUM':
       return {
         bg: 'bg-amber-500/10 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-500/30',
@@ -37,7 +48,7 @@ export function getRiskColorClass(risk) {
     default:
       return {
         bg: 'bg-emerald-500/10 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
-        badge: 'bg-emerald-500/15 text-emerald-600 dark*text-emerald-400 border border-emerald-500/30',
+        badge: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30',
         glow: 'glow-green',
         accent: '#10b981',
         border: 'border-emerald-500/40',

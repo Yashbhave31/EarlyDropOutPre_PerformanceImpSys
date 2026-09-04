@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, Search, Bell, Sun, Moon, Shield, Sparkles, CheckCheck } from 'lucide-react';
+import { Menu, Search, Bell, Sun, Moon, Shield, Sparkles, CheckCheck, LogOut } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
 
 export default function Topbar({ onToggleSidebar }) {
   const { isDark, toggleTheme } = useTheme();
-  const { user, role } = useAuth();
+  const { user, role, logout } = useAuth();
   const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
   const [showNotifs, setShowNotifs] = useState(false);
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <header className="sticky top-0 z-30 h-16 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-6 flex items-center justify-between">
@@ -101,13 +106,21 @@ export default function Topbar({ onToggleSidebar }) {
           )}
         </div>
 
-        {/* Quick User Avatar */}
-        <div className="flex items-center space-x-2 pl-2 border-l border-slate-800">
+        {/* Quick User Avatar & Logout */}
+        <div className="flex items-center space-x-2.5 pl-2 border-l border-slate-800">
           <img
             src={user?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150"}
             alt="Profile"
             className="w-8 h-8 rounded-xl object-cover border border-indigo-500/40"
           />
+          <button
+            onClick={handleLogout}
+            id="topbar-signout-button"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+            title="Sign Out"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </header>

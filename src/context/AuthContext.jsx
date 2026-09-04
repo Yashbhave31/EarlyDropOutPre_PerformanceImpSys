@@ -1,25 +1,23 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authService, DEMO_CREDENTIALS } from '../services/authService';
+import { authService } from '../services/authService';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(() => authService.getCurrentUser());
+  const loading = false;
 
   useEffect(() => {
-    const existing = authService.getCurrentUser();
-    if (existing) {
-      setUser(existing);
-    } else {
-      setUser(DEMO_CREDENTIALS.admin);
-      localStorage.setItem('dropout_auth_user', JSON.stringify(DEMO_CREDENTIALS.admin));
-    }
-    setLoading(false);
+    // Synchronize user if localStorage changes in another tab/window
+    const handleStorageChange = () => {
+      setUser(authService.getCurrentUser());
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  const login = async (email, password) => {
-    const res = await authService.login(email, password);
+  const login = async (email, password, requestedRole = null) => {
+    const res = await authService.login(email, password, requestedRole);
     setUser(res.user);
     return res;
   };
